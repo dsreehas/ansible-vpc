@@ -1,0 +1,11 @@
+---
+- name: Create VPC
+  amazon.aws.ec2_vpc_net:
+    name: "{{ vpc_name }}"
+    cidr_block: "{{ vpc_cidr }}"
+    region: "{{ region }}"
+    state: present
+  register: vpc
+
+- set_fact:
+    vpc_id: "{{ vpc.vpc.id }}"

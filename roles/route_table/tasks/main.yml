@@ -1,0 +1,22 @@
+---
+- name: Create public route table
+  amazon.aws.ec2_vpc_route_table:
+    vpc_id: "{{ vpc_id }}"
+    region: "{{ region }}"
+    subnets: "{{ public_subnet_ids }}"
+    routes:
+      - dest: 0.0.0.0/0
+        gateway_id: "{{ igw_id }}"
+    tags:
+      Name: public-route-table
+
+- name: Create private route table
+  amazon.aws.ec2_vpc_route_table:
+    vpc_id: "{{ vpc_id }}"
+    region: "{{ region }}"
+    subnets: "{{ private_subnet_ids }}"
+    routes:
+      - dest: 0.0.0.0/0
+        gateway_id: "{{ nat_gateway_id }}"
+    tags:
+      Name: private-route-table
